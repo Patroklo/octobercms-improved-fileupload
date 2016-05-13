@@ -1,7 +1,7 @@
 <?php
 namespace Patroklo\FormWidgets;
 
-
+use Illuminate\Support\Facades\App;
 use Input;
 use Request;
 use Response;
@@ -50,9 +50,6 @@ class FileUpload extends \Backend\FormWidgets\FileUpload
 
         parent::init();
 
-        // Load the $this->rules parameter
-        $this->setValidationRules();
-
     }
 
 
@@ -67,6 +64,10 @@ class FileUpload extends \Backend\FormWidgets\FileUpload
             return;
         }
 
+        // Adds the path to the lang files
+        app('translator')->getLoader()->
+            addNamespace('patroklo.formwidgets', base_path('vendor/patroklo/octobercms-improved-fileupload/src/lang') );
+        
         try
         {
             if (!Input::hasFile('file_data'))
@@ -76,12 +77,13 @@ class FileUpload extends \Backend\FormWidgets\FileUpload
 
             $uploadedFile = Input::file('file_data');
 
-            $validationRules = $this->rules;
+            // Load the $this->rules parameter
+            $this->setValidationRules();
 
             $validation = Validator::make(
                 ['file_data' => $uploadedFile],
-                ['file_data' => $validationRules],
-                ['max_files' => e(trans('patroklo.webcomic::lang.messages.max_files'))]
+                ['file_data' => $this->rules],
+                ['max_files' => e(trans('patroklo.formwidgets::messages.max_files'))]
             );
 
             if ($validation->fails())
