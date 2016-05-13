@@ -1,5 +1,5 @@
 {
-  "name": "Patroklo/octobercms-improved-fileupload",
+  "name": "patroklo/octobercms-improved-fileupload",
   "type": "library",
   "description": "Improves October CMS file upload form widget options with user defined rules.",
   "keywords": [
