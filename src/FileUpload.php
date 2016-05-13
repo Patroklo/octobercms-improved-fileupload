@@ -150,19 +150,19 @@ class FileUpload extends \Backend\FormWidgets\FileUpload
         
         if (is_null($this->rules))
         {
-            $validationRules = ['max:' . File::getMaxFilesize()];
+            $this->rules = ['max:' . File::getMaxFilesize()];
             if ($fileTypes = $this->getAcceptedFileTypes())
             {
-                $validationRules[] = 'extensions:' . $fileTypes;
+                $this->rules[] = 'extensions:' . $fileTypes;
             }
 
             if ($this->mimeTypes)
             {
-                $validationRules[] = 'mimes:' . $this->mimeTypes;
+                $this->rules[] = 'mimes:' . $this->mimeTypes;
             }
         }
 
-        return $validationRules;
+        return $this->rules;
     }
 
     /**
