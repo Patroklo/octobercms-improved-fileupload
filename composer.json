@@ -1,0 +1,32 @@
+{
+  "name": "Patroklo/OctoberCms-improved-fileupload",
+  "type": "library",
+  "description": "Improves October CMS file upload form widget options with user defined rules.",
+  "keywords": [
+    "upload",
+    "october cms",
+    "form widget",
+    "forms"
+  ],
+  "homepage": "https://github.com/Patroklo/OctoberCms-improved-fileupload",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Joseba Juániz",
+      "email": "joseba.juaniz@gmail.com",
+      "homepage": "http://github.com/Patroklo/"
+    }
+  ],
+  "require": {
+    "php": ">=5.4",
+    "october/rain": "~1.0",
+    "october/system": "~1.0",
+    "october/backend": "~1.0",
+    "october/cms": "~1.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Patroklo\\FormWidgets\\": "src/"
+    }
+  }
+}
