@@ -1,15 +1,14 @@
 <?php
 namespace Patroklo\FormWidgets;
 
-use Illuminate\Support\Facades\App;
+use ApplicationException;
+use Exception;
 use Input;
 use Request;
 use Response;
-use Validator;
 use System\Models\File;
-use ApplicationException;
 use ValidationException;
-use Exception;
+use Validator;
 
 
 /**
@@ -18,7 +17,11 @@ use Exception;
  *
  * Improves the file validation for the file uploads
  * getting the rules from the YAML configuration file or the model's attribute rules.
- *
+ * 
+ * Supported options:
+ * - mode: image-single, image-multi, file-single, file-multi, image-multi-big
+ * - upload-label: Add file
+ * - empty-label: No file uploaded
  */
 class FileUpload extends \Backend\FormWidgets\FileUpload
 {
@@ -66,8 +69,8 @@ class FileUpload extends \Backend\FormWidgets\FileUpload
 
         // Adds the path to the lang files
         app('translator')->getLoader()->
-            addNamespace('patroklo.formwidgets', base_path('vendor/patroklo/octobercms-improved-fileupload/src/lang') );
-        
+        addNamespace('patroklo.formwidgets', base_path('vendor/patroklo/octobercms-improved-fileupload/src/lang'));
+
         try
         {
             if (!Input::hasFile('file_data'))
@@ -123,7 +126,6 @@ class FileUpload extends \Backend\FormWidgets\FileUpload
         exit;
     }
 
-
     /**
      * Try to get the upload validation rules.
      * First it will try to load the rules declared in the YAML configuration file
@@ -149,7 +151,7 @@ class FileUpload extends \Backend\FormWidgets\FileUpload
                 $this->rules = $modelRules[$this->fieldName];
             }
         }
-        
+
         if (is_null($this->rules))
         {
             $this->rules = ['max:' . File::getMaxFilesize()];
@@ -178,10 +180,33 @@ class FileUpload extends \Backend\FormWidgets\FileUpload
      * @param bool $isPublic Returns public path instead of an absolute one
      * @return string
      */
-    public function guessViewPath($suffix = '', $isPublic = false)
+    public function getViewPath($fileName, $viewPath = NULL)
+    {
+        $returnPaths = [];
+
+        $class = get_called_class();
+
+        $returnPaths[] = $this->guessViewPathFrom($class, '/partials', FALSE);
+
+        $classParent = get_parent_class($this);
+
+        $returnPaths[] = $this->guessViewPathFrom($classParent, '/partials', FALSE);
+
+        return parent::getViewPath($fileName, $returnPaths);
+    }
+
+
+    /**
+     * Guess the package path for the called class.
+     * @param string $suffix An extra path to attach to the end
+     * @param bool $isPublic Returns public path instead of an absolute one
+     * @return string
+     */
+    public function guessViewPath($suffix = '', $isPublic = FALSE)
     {
         $class = get_parent_class($this);
-        
+
         return $this->guessViewPathFrom($class, $suffix, $isPublic);
     }
+
 }
