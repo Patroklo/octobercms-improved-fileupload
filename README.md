@@ -19,6 +19,26 @@ Or add this to your project's `composer.json` file:
 
 And it's done!
 
+
+## New image mode
+
+There's a new mode in the form widget called `image-multi-big`. When activated, it will make bigger images when uploading them than the standar multiupload.
+
+To activate this mode you only have to declare it in the yaml file:
+
+
+```
+fields:
+  // ...
+  images:
+    tab: Tab text
+    label: Label text
+    type: Patroklo\FormWidgets\FileUpload
+    mode: image-multi-big
+  // ...
+```
+
+
 ## New Rules
 
 There are an additional set of rules developed to increase the performance of the form system:
