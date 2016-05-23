@@ -24,7 +24,7 @@
     <?php foreach ($fileList as $file): ?>
     <div class="upload-object is-success" data-id="<?= $file->id ?>" data-path="<?= $file->pathUrl ?>" style="width:auto; height: auto; max-width: 100%; display:block;">
         <div class="icon-container image"  style="display:flex;justify-content:center;align-items:center;width: 100%; height: auto;">
-            <img src="<?= $file->thumbUrl ?>" alt=""/>
+            <img style="width: inherit; <?= $cssDimensions ?>" src="<?= $file->thumbUrl ?>" alt=""/>
         </div>
         <div class="info" style="margin-left: 10px; clear:both;">
             <h4 class="filename">
@@ -51,7 +51,7 @@
 <script type="text/template" id="<?= $this->getId('template') ?>">
     <div class="upload-object dz-preview dz-file-preview" style="width:auto; height: auto; max-width: 100%; display:block;">
         <div class="icon-container image"   style="display:flex;justify-content:center;align-items:center;width: 100%; height: auto;">
-            <img data-dz-thumbnail style="<?= $cssDimensions ?>" alt=""/>
+            <img data-dz-thumbnail style="width: inherit; <?= $cssDimensions ?>" alt=""/>
         </div>
         <div class="info"  style="margin-left: 10px; clear:both;">
             <h4 class="filename">
